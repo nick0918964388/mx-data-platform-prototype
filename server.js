@@ -43,6 +43,8 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: '伺服器內部錯誤' });
 });
 
-app.listen(PORT, () => {
-  console.log(`伺服器運行於 http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`伺服器運行於 http://localhost:${PORT}`);
+// });
+
+module.exports = app;
