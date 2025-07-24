@@ -66,11 +66,14 @@ const IndicatorCards = ({ data }) => {
             padding="lg"
             radius="md"
             style={{
-              height: '100%',
+              height: '240px',
               background: card.bgColor,
               color: 'white',
               cursor: 'pointer',
               transition: 'all 0.3s ease',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
             }}
             styles={{
               root: {
@@ -82,9 +85,18 @@ const IndicatorCards = ({ data }) => {
             }}
           >
             {/* Header with icon */}
-            <Group justify="space-between" mb="md">
-              <Box>
-                <Text size="sm" fw={500} opacity={0.9}>
+            <Group justify="space-between" mb="md" wrap="nowrap">
+              <Box style={{ flexShrink: 1, minWidth: 0 }}>
+                <Text 
+                  size="lg" 
+                  fw={500} 
+                  opacity={0.9}
+                  style={{
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  }}
+                >
                   {card.title}
                 </Text>
               </Box>
@@ -94,6 +106,7 @@ const IndicatorCards = ({ data }) => {
                 style={{
                   backgroundColor: card.iconBg,
                   color: 'white',
+                  flexShrink: 0,
                 }}
               >
                 <Text fw={700} size="lg">
@@ -103,25 +116,65 @@ const IndicatorCards = ({ data }) => {
             </Group>
 
             {/* Primary value */}
-            <Box mb="md">
-              <Text size="2.2rem" fw={700} lh={1}>
+            <Box mb="md" style={{ flexShrink: 0 }}>
+              <Text 
+                size="3.2rem" 
+                fw={700} 
+                lh={0.9}
+                style={{
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap'
+                }}
+              >
                 {card.primaryValue}
               </Text>
               {card.primaryLabel && (
-                <Text size="xs" opacity={0.8} mt={4}>
+                <Text 
+                  size="md" 
+                  opacity={0.8} 
+                  mt={4}
+                  style={{
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  }}
+                >
                   {card.primaryLabel}
                 </Text>
               )}
             </Box>
 
             {/* Secondary items */}
-            <Box>
+            <Box style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
               {card.secondaryItems.map((item, index) => (
-                <Group key={index} justify="space-between" mb={6}>
-                  <Text size="xs" opacity={0.9} fw={500}>
+                <Group key={index} justify="space-between" mb={8} wrap="nowrap">
+                  <Text 
+                    size="sm" 
+                    opacity={0.9} 
+                    fw={500}
+                    style={{ 
+                      flexShrink: 0,
+                      maxWidth: '55%',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap'
+                    }}
+                  >
                     {item.label}
                   </Text>
-                  <Text size="xs" fw={600}>
+                  <Text 
+                    size="sm" 
+                    fw={600}
+                    style={{ 
+                      flexShrink: 1,
+                      textAlign: 'right',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      maxWidth: '45%'
+                    }}
+                  >
                     {item.value}
                   </Text>
                 </Group>

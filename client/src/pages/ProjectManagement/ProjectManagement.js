@@ -9,9 +9,14 @@ import {
   IconCalendar, IconCurrency, IconShield, IconAlertTriangle 
 } from '@tabler/icons-react';
 import IndicatorCards from '../../components/IndicatorCards/IndicatorCards';
+import ProjectScopeManagement from './ProjectScope/ProjectScopeManagement';
 
 // Project Management Sub-modules
 const ProjectScope = () => {
+  return <ProjectScopeManagement />;
+};
+
+const OriginalProjectScope = () => {
   const [projects] = useState([
     { id: 'P001', name: '台北捷運延伸工程', scope: '土木建設', budget: '50億', status: '進行中', manager: '王工程師' },
     { id: 'P002', name: '高雄港區開發案', scope: '港口建設', budget: '30億', status: '規劃中', manager: '李工程師' },

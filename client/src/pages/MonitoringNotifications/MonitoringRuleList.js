@@ -1,7 +1,7 @@
 import React from 'react';
-import { Table, Switch, ActionIcon, Group, Badge, Text } from '@mantine/core';
-import { IconPencil, IconTrash } from '@tabler/icons-react';
-import { mockProjects, mockVendors } from './mockData';
+import { Table, Switch, ActionIcon, Group, Badge, Text, Avatar, Tooltip } from '@mantine/core';
+import { IconPencil, IconTrash, IconBell } from '@tabler/icons-react';
+import { mockProjects, mockVendors, mockNotificationGroups } from './mockData';
 
 const getTargetName = (targetType, targetId) => {
   if (targetType === 'project') {
@@ -53,9 +53,41 @@ const MonitoringRuleList = ({ rules, onToggle, onEdit, onDelete }) => {
           {rule.targetType === 'project' ? '專案' : '廠商'}
         </Badge>
       </Table.Td>
-      <Table.Td>{getTargetName(rule.targetType, rule.targetId)}</Table.Td>
+      <Table.Td>
+        <div>
+          <Text fw={500}>{getTargetName(rule.targetType, rule.targetId)}</Text>
+          {rule.plantArea && (
+            <Badge size="xs" color="gray" variant="light" mt={2}>
+              {rule.plantArea}
+            </Badge>
+          )}
+        </div>
+      </Table.Td>
       <Table.Td>
         <Text size="sm">{getConditionDescription(rule)}</Text>
+      </Table.Td>
+      <Table.Td>
+        {rule.notificationGroups && rule.notificationGroups.length > 0 ? (
+          <Group gap="xs">
+            {rule.notificationGroups.slice(0, 2).map(groupId => {
+              const group = (mockNotificationGroups || []).find(g => g && g.id === groupId);
+              return group ? (
+                <Tooltip key={group.id} label={`${group.name} (${group.members?.length || 0} 位成員)`}>
+                  <Badge size="sm" variant="light" color="blue">
+                    {group.name}
+                  </Badge>
+                </Tooltip>
+              ) : null;
+            })}
+            {rule.notificationGroups.length > 2 && (
+              <Badge size="sm" variant="light" color="gray">
+                +{rule.notificationGroups.length - 2}
+              </Badge>
+            )}
+          </Group>
+        ) : (
+          <Text size="sm" c="dimmed">無通知群組</Text>
+        )}
       </Table.Td>
       <Table.Td>
         <Group gap="xs">
@@ -85,6 +117,7 @@ const MonitoringRuleList = ({ rules, onToggle, onEdit, onDelete }) => {
           <Table.Th>監控類型</Table.Th>
           <Table.Th>監控目標</Table.Th>
           <Table.Th>觸發條件</Table.Th>
+          <Table.Th>通知群組</Table.Th>
           <Table.Th>操作</Table.Th>
         </Table.Tr>
       </Table.Thead>
